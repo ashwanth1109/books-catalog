@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { ApolloServer } from 'apollo-server-express';
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 
-import { Logger, PORT } from '@ashwanth1109/books-catalog-common';
+import { Logger, NodeError, PORT } from '@ashwanth1109/books-catalog-common';
 import { Query, Resolver, buildSchema } from 'type-graphql';
 import express from 'express';
 import http from 'http';
@@ -37,7 +37,7 @@ async function main(): Promise<void> {
   try {
     await mongoose.connect('mongodb://books-db-svc:27017/books');
     Logger.info(`Connected to mongodb successfully`);
-  } catch (e: any) {
+  } catch (e: NodeError) {
     Logger.error(`Error connecting to mongodb: ${e.message}`);
   }
 
