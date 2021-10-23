@@ -1,7 +1,7 @@
 name: Verify
 on:
   push:
-    branches: ["**"]
+    branches: [ "**" ]
 
 jobs:
   analyze:
@@ -10,6 +10,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      - name: Install dependencies
+        working-directory: books-msvc
+        run: npm install
       - name: Lint Books Microservice
         working-directory: books-msvc
         run: npm run lint
