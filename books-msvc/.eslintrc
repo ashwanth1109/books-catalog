@@ -1,0 +1,54 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "sort-imports-es6-autofix"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": "error",
+    "@typescript-eslint/explicit-module-boundary-types": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-for-in-array": "error",
+    "@typescript-eslint/no-non-null-assertion": "error",
+    "@typescript-eslint/no-require-imports": "error",
+    "@typescript-eslint/prefer-for-of": "error",
+    "@typescript-eslint/prefer-optional-chain": "error",
+    "no-console": "error",
+    "brace-style": "error",
+    "camelcase": "error",
+    "block-scoped-var": "error",
+    "complexity": ["error", 25],
+    "consistent-this": "error",
+    "curly": "error",
+    "default-case": "error",
+    "eqeqeq": "error",
+    "global-require": "error",
+    "guard-for-in": "error",
+    "max-depth": "error",
+    "newline-before-return": "error",
+    "no-await-in-loop": "error",
+    "no-buffer-constructor": "error",
+    "no-debugger": "error",
+    "no-global-assign": "error",
+    "no-implicit-globals": "error",
+    "no-inner-declarations": "error",
+    "no-invalid-regexp": "error",
+    "no-lonely-if": "error",
+    "no-loop-func": "error",
+    "no-return-await": "error",
+    "prefer-const": "error",
+    "require-await": "error",
+    "sort-imports-es6-autofix/sort-imports-es6": [
+      2,
+      {
+        "ignoreCase": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+      }
+    ]
+  }
+}

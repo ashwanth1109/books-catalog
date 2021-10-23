@@ -1,21 +1,21 @@
-import "reflect-metadata";
-import { ApolloServer } from "apollo-server-express";
-import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
+import 'reflect-metadata';
+import { ApolloServer } from 'apollo-server-express';
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 
-import express from "express";
-import http from "http";
-import { buildSchema, Query, Resolver } from "type-graphql";
-import { Logger, PORT } from "@ashwanth1109/books-catalog-common";
+import { Logger } from '@ashwanth1109/books-catalog-common';
+import { Query, Resolver, buildSchema } from 'type-graphql';
+import express from 'express';
+import http from 'http';
 
 @Resolver()
 class HelloResolver {
-  @Query(() => String, { nullable: true, description: "" })
-  async hello() {
-    return "Hello World!";
+  @Query(() => String, { nullable: true, description: '' })
+  hello(): string {
+    return 'Hello World!';
   }
 }
 
-async function main() {
+async function main(): Promise<void> {
   const app = express();
   const httpServer = http.createServer(app);
 
@@ -37,4 +37,6 @@ async function main() {
   );
 }
 
-main().then();
+(async (): Promise<void> => {
+  await main();
+})();
