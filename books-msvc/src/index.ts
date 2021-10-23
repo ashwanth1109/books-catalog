@@ -28,11 +28,13 @@ async function main(): Promise<void> {
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
   await server.start();
-  server.applyMiddleware({ app });
+  server.applyMiddleware({ app, path: "/api/books/graphql" });
   await new Promise((resolve) => {
-    httpServer.listen({ port: 4000 }, resolve);
+    httpServer.listen({ port: PORT.BOOKS }, resolve);
   });
-  Logger.info(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+  Logger.info(
+    `🚀 Server ready at http://localhost:${PORT.BOOKS}${server.graphqlPath}`
+  );
 }
 
 (async (): Promise<void> => {
