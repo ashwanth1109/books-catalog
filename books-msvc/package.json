@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@ashwanth1109/books-catalog-common": "1.0.7",
+    "@typegoose/typegoose": "9.2.0",
     "apollo-server-core": "3.4.0",
     "apollo-server-express": "3.4.0",
     "express": "4.17.1",
