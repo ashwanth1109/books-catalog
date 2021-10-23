@@ -5,7 +5,7 @@ import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
 import express from "express";
 import http from "http";
 import { buildSchema, Query, Resolver } from "type-graphql";
-import { Logger } from "@ashwanth1109/books-catalog-common";
+import { Logger, PORT } from "@ashwanth1109/books-catalog-common";
 
 @Resolver()
 class HelloResolver {
@@ -28,11 +28,13 @@ async function main() {
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
   await server.start();
-  server.applyMiddleware({ app });
+  server.applyMiddleware({ app, path: "/api/books/graphql" });
   await new Promise((resolve) => {
-    httpServer.listen({ port: 4000 }, resolve);
+    httpServer.listen({ port: PORT.BOOKS }, resolve);
   });
-  Logger.info(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+  Logger.info(
+    `🚀 Server ready at http://localhost:${PORT.BOOKS}${server.graphqlPath}`
+  );
 }
 
 main().then();
