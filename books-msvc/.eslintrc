@@ -1,7 +1,10 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "sort-imports-es6-autofix"],
+  "plugins": [
+    "@typescript-eslint",
+    "sort-imports-es6-autofix"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -17,11 +20,16 @@
     "@typescript-eslint/no-require-imports": "error",
     "@typescript-eslint/prefer-for-of": "error",
     "@typescript-eslint/prefer-optional-chain": "error",
+    // Disabling because of false positives for "types" import
+    "@typescript-eslint/no-unused-vars": "off",
     "no-console": "error",
     "brace-style": "error",
     "camelcase": "error",
     "block-scoped-var": "error",
-    "complexity": ["error", 25],
+    "complexity": [
+      "error",
+      25
+    ],
     "consistent-this": "error",
     "curly": "error",
     "default-case": "error",
@@ -47,7 +55,12 @@
       {
         "ignoreCase": false,
         "ignoreMemberSort": false,
-        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+        "memberSyntaxSortOrder": [
+          "none",
+          "all",
+          "multiple",
+          "single"
+        ]
       }
     ]
   }
