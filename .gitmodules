@@ -1,0 +1,3 @@
+[submodule "books-catalog-common"]
+	path = books-catalog-common
+	url = https://github.com/ashwanth1109/books-catalog-common.git
