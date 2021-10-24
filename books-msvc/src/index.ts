@@ -38,13 +38,17 @@ async function main(): Promise<void> {
 
   try {
     await mongoose.connect('mongodb://books-db-svc:27017/books');
-    Logger.info(`Connected to mongodb successfully`);
+    Logger.info(`🚀 Connected to mongodb successfully`);
   } catch (e: NodeError) {
     Logger.error(`Error connecting to mongodb: ${e.message}`);
   }
 
   Logger.info(
-    `🚀 Server ready at http://localhost:${PORT.BOOKS}${server.graphqlPath}`
+    `🚀 Server ready within the k8s cluster at http://localhost:${PORT.BOOKS}${server.graphqlPath}`
+  );
+
+  Logger.info(
+    `🚀 Server ready via Ingress at http://localhost${server.graphqlPath}`
   );
 }
 

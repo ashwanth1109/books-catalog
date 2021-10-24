@@ -1,4 +1,4 @@
-import { Book } from '../entities/book';
+import { Book } from '../entities/book.model';
 import { Field, InputType } from 'type-graphql';
 
 @InputType()

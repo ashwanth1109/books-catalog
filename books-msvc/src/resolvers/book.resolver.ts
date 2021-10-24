@@ -1,18 +1,30 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
-import { Book, BookModel } from '../entities/book';
-import { BookInput } from '../types/book.input';
+import { ObjectId } from 'mongodb';
 import { Promise } from 'mongoose';
 
-@Resolver((of: void) => Book)
+import { Book, BookModel } from '../entities/book.model';
+import { BookInput } from '../types/book.input';
+import { ObjectIdScalar } from '../scalars/object-id.scalar';
+
+@Resolver((_: void) => Book)
 export class BookResolver {
-  @Query((returns: void) => [Book])
+  @Query((_: void) => Book, { nullable: true })
+  async book(
+    @Arg('bookId', (_: void) => ObjectIdScalar) bookId: ObjectId
+  ): Promise<Book | null> {
+    const book = await BookModel.findById(bookId);
+
+    return book;
+  }
+
+  @Query((_: void) => [Book])
   async books(): Promise<Book[]> {
     const books = await BookModel.find({});
 
     return books;
   }
 
-  @Mutation((returns: void) => Book)
+  @Mutation((_: void) => Book)
   async addBook(@Arg('book') bookInput: BookInput): Promise<Book> {
     const book = new BookModel(bookInput);
     await book.save();
