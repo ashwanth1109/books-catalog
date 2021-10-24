@@ -5,6 +5,7 @@ export const ObjectIdScalar = new GraphQLScalarType({
   name: 'ObjectId',
   description: 'Mongo object id scalar type',
   serialize(value: ObjectId): string {
+    // TODO: identify what would be suitable validations here
     return value?.toHexString();
   },
   parseValue(value: unknown): ObjectId {

@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Books microservices test should assert that book can be successfully created 1`] = `
+Object {
+  "data": Object {
+    "addBook": Object {
+      "description": "How do you not know Harry Potter? What are you, a muggle?",
+      "title": "Harry Potter and the Philosopher's Stone",
+      "year": 1997,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
