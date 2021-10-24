@@ -74,8 +74,4 @@ describe('Books microservices test', () => {
     expect(result.errors).toBeUndefined();
     expect(result.data?.book).toEqual({ _id: bookId, ...book });
   });
-
-  it('failing test', () => {
-    expect(true).toBeFalsy();
-  });
 });
