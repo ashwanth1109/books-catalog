@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import type { NodeError } from '@ashwanth1109/books-catalog-common';
 
 import initializeServers from './server';
+import seedDB from './seed';
 
 async function main(): Promise<void> {
   const { apolloServer, httpServer, app } = await initializeServers();
@@ -12,6 +13,7 @@ async function main(): Promise<void> {
 
   try {
     await mongoose.connect('mongodb://books-db-svc:27017/books');
+    await seedDB();
     Logger.info(`🚀 Connected to mongodb successfully`);
   } catch (e: NodeError) {
     Logger.error(`Error connecting to mongodb: ${e.message}`);
