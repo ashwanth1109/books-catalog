@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: books-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+spec:
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - path: /api/books/?(.*)
+            backend:
+              serviceName: books-svc
+              servicePort: 4001
+          - path: /?(.*)
+            backend:
+              serviceName: client-svc
+              servicePort: 4000
