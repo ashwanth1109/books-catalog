@@ -8,9 +8,6 @@ async function main(): Promise<void> {
   const { apolloServer, httpServer, app } = await initializeServers();
   await apolloServer.start();
   apolloServer.applyMiddleware({ app, path: '/api/books/graphql' });
-  await new Promise((resolve) => {
-    httpServer.listen({ port: PORT.BOOKS }, resolve);
-  });
 
   try {
     await mongoose.connect('mongodb://books-db-svc:27017/books');
@@ -19,13 +16,15 @@ async function main(): Promise<void> {
     Logger.error(`Error connecting to mongodb: ${e.message}`);
   }
 
-  Logger.info(
-    `🚀 Server ready within the k8s cluster at http://localhost:${PORT.BOOKS}${apolloServer.graphqlPath}`
-  );
+  httpServer.listen(PORT.BOOKS, () => {
+    Logger.info(
+      `🚀 Server ready within the k8s cluster at http://localhost:${PORT.BOOKS}${apolloServer.graphqlPath}`
+    );
 
-  Logger.info(
-    `🚀 Server ready via Ingress at http://localhost${apolloServer.graphqlPath}`
-  );
+    Logger.info(
+      `🚀 Server ready via Ingress at http://localhost${apolloServer.graphqlPath}`
+    );
+  });
 }
 
 (async (): Promise<void> => {
