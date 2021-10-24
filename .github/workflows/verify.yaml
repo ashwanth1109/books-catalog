@@ -5,14 +5,19 @@ on:
 
 jobs:
   analyze:
-    name: Analyze
+    name: Books Microservice Analysis
     runs-on: ubuntu-latest
+    env:
+      directory: books-msvc
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Install dependencies
-        working-directory: books-msvc
+        working-directory: ${{env.directory}}
         run: npm install
       - name: Lint Books Microservice
-        working-directory: books-msvc
+        working-directory: ${{env.directory}}
         run: npm run lint
+      - name: Tests
+        working-directory: ${{env.directory}}
+        run: npm run test

@@ -1,40 +1,13 @@
 import 'reflect-metadata';
-import { ApolloServer } from 'apollo-server-express';
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
-
-import * as path from 'path';
-import { BookResolver } from './resolvers/book.resolver';
 import { Logger, NodeError, PORT } from '@ashwanth1109/books-catalog-common';
-import { ObjectId } from 'mongodb';
-import { ObjectIdScalar } from './scalars/object-id.scalar';
-import { TypeGooseMiddleware } from './middlewares/type-goose.middleware';
-import { buildSchema } from 'type-graphql';
-import express from 'express';
-import http from 'http';
 import mongoose from 'mongoose';
 
+import initializeServers from './server';
+
 async function main(): Promise<void> {
-  const app = express();
-  const httpServer = http.createServer(app);
-
-  const schema = await buildSchema({
-    resolvers: [BookResolver],
-    emitSchemaFile: path.resolve(__dirname, 'schema.gql'),
-    globalMiddlewares: [TypeGooseMiddleware],
-    scalarsMap: [{ type: ObjectId, scalar: ObjectIdScalar }],
-    validate: false,
-  });
-
-  const server = new ApolloServer({
-    schema,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-  });
-
-  await server.start();
-  server.applyMiddleware({ app, path: '/api/books/graphql' });
-  await new Promise((resolve) => {
-    httpServer.listen({ port: PORT.BOOKS }, resolve);
-  });
+  const { apolloServer, httpServer, app } = await initializeServers();
+  await apolloServer.start();
+  apolloServer.applyMiddleware({ app, path: '/api/books/graphql' });
 
   try {
     await mongoose.connect('mongodb://books-db-svc:27017/books');
@@ -43,13 +16,15 @@ async function main(): Promise<void> {
     Logger.error(`Error connecting to mongodb: ${e.message}`);
   }
 
-  Logger.info(
-    `🚀 Server ready within the k8s cluster at http://localhost:${PORT.BOOKS}${server.graphqlPath}`
-  );
+  httpServer.listen(PORT.BOOKS, () => {
+    Logger.info(
+      `🚀 Server ready within the k8s cluster at http://localhost:${PORT.BOOKS}${apolloServer.graphqlPath}`
+    );
 
-  Logger.info(
-    `🚀 Server ready via Ingress at http://localhost${server.graphqlPath}`
-  );
+    Logger.info(
+      `🚀 Server ready via Ingress at http://localhost${apolloServer.graphqlPath}`
+    );
+  });
 }
 
 (async (): Promise<void> => {
