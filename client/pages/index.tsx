@@ -1,8 +1,6 @@
 import { Breadcrumb, Card } from "antd";
 import type { NextPage } from "next";
-import Link from "next/link";
-
-import MainLayout from "../layout/main.layout";
+import { useRouter } from "next/router";
 import { useQuery, gql } from "@apollo/client";
 
 interface Book {
@@ -18,9 +16,10 @@ interface Book {
  */
 
 const Home: NextPage = () => {
+  const router = useRouter();
   const { loading, error, data } = useQuery(
     gql`
-      query {
+      query GetAllBooks {
         books {
           _id
           title
@@ -29,19 +28,21 @@ const Home: NextPage = () => {
     `
   );
 
-  if (loading) return <p>Loading...</p>;
-  if (error || !data) return <p>Error :(</p>;
+  if (error) return <h1>Error fetching data...</h1>;
 
   return (
-    <MainLayout>
+    <>
       <Breadcrumb style={{ margin: "16px 0" }}>
         <Breadcrumb.Item>Books</Breadcrumb.Item>
       </Breadcrumb>
-      <Card title="List of books in your catalog:" className="p-8">
+      <Card
+        title="List of books in your catalog:"
+        className="p-8"
+        loading={loading}
+      >
         {(data?.books || [])?.map((book: Book) => (
-          <Link
-            href={`/book/${encodeURIComponent(book._id)}`}
-            passHref
+          <div
+            onClick={() => router.push(`/book/${encodeURIComponent(book._id)}`)}
             key={book._id}
           >
             <Card.Grid
@@ -53,10 +54,10 @@ const Home: NextPage = () => {
             >
               {book?.title}
             </Card.Grid>
-          </Link>
+          </div>
         ))}
       </Card>
-    </MainLayout>
+    </>
   );
 };
 
