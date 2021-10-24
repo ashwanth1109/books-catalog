@@ -1,6 +1,7 @@
 import 'reflect-metadata';
-import { Logger, NodeError, PORT } from '@ashwanth1109/books-catalog-common';
+import { Logger, PORT } from '@ashwanth1109/books-catalog-common';
 import mongoose from 'mongoose';
+import type { NodeError } from '@ashwanth1109/books-catalog-common';
 
 import initializeServers from './server';
 
