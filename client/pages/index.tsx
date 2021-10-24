@@ -1,5 +1,6 @@
+import { Breadcrumb, Card } from "antd";
 import type { NextPage } from "next";
-import { Breadcrumb } from "antd";
+import Link from "next/link";
 
 import MainLayout from "../layout/main.layout";
 import { useQuery, gql } from "@apollo/client";
@@ -36,11 +37,25 @@ const Home: NextPage = () => {
       <Breadcrumb style={{ margin: "16px 0" }}>
         <Breadcrumb.Item>Books</Breadcrumb.Item>
       </Breadcrumb>
-      <div className="p-8">
+      <Card title="List of books in your catalog:" className="p-8">
         {(data?.books || [])?.map((book: Book) => (
-          <div key={book._id}>{book?.title}</div>
+          <Link
+            href={`/book/${encodeURIComponent(book._id)}`}
+            passHref
+            key={book._id}
+          >
+            <Card.Grid
+              style={{
+                width: "25%",
+                textAlign: "center",
+                cursor: "pointer",
+              }}
+            >
+              {book?.title}
+            </Card.Grid>
+          </Link>
         ))}
-      </div>
+      </Card>
     </MainLayout>
   );
 };
