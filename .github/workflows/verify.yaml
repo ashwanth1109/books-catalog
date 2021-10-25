@@ -35,6 +35,3 @@ jobs:
       - name: Lint
         working-directory: ${{env.directory}}
         run: npm run lint
-      - name: Tests
-        working-directory: ${{env.directory}}
-        run: npm run test
