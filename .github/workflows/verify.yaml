@@ -4,7 +4,7 @@ on:
     branches: [ "**" ]
 
 jobs:
-  analyze:
+  analyze-books-msvc:
     name: Books Microservice Analysis
     runs-on: ubuntu-latest
     env:
@@ -18,6 +18,20 @@ jobs:
       - name: Lint Books Microservice
         working-directory: ${{env.directory}}
         run: npm run lint
+      - name: Tests
+        working-directory: ${{env.directory}}
+        run: npm run test
+  analyze-client:
+    name: Client Analysis
+    runs-on: ubuntu-latest
+    env:
+      directory: client
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        working-directory: ${{env.directory}}
+        run: npm install
       - name: Tests
         working-directory: ${{env.directory}}
         run: npm run test

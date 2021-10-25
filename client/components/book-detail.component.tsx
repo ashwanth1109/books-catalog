@@ -1,12 +1,7 @@
-import { gql, useQuery } from "@apollo/client";
-import { Avatar, Breadcrumb, Card, Tag } from "antd";
-import {
-  BookOutlined,
-  EllipsisOutlined,
-  ShoppingCartOutlined,
-} from "@ant-design/icons";
-
-const { Meta } = Card;
+import { useQuery } from "@apollo/client";
+import CustomBreadcrumb from "./custom-breadcrumb.component";
+import BookDetailCard from "./book-detail-card.component";
+import { GET_BOOK_BY_ID } from "../gql/queries";
 
 const BookDetailComponent = ({
   bid,
@@ -15,55 +10,24 @@ const BookDetailComponent = ({
   bid: string;
   navigateToBooks: () => void;
 }) => {
-  const { loading, error, data } = useQuery(
-    gql`
-      query GetBookById($bookId: ObjectId!) {
-        book(bookId: $bookId) {
-          _id
-          title
-          description
-          year
-        }
-      }
-    `,
-    { variables: { bookId: bid } }
-  );
+  const { loading, error, data } = useQuery(GET_BOOK_BY_ID, {
+    variables: { bookId: bid },
+  });
 
   if (error) return <h1>Error fetching data...</h1>;
 
   return (
     <>
       <div className="mt-4">
-        <Breadcrumb style={{ margin: "16px 0" }}>
-          <Breadcrumb.Item onClick={() => navigateToBooks()}>
-            <span className="cursor-pointer">Books</span>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>{data?.book.title}</Breadcrumb.Item>
-        </Breadcrumb>
+        <CustomBreadcrumb title={data?.book.title} navigate={navigateToBooks} />
       </div>
       <div className="mt-8">
-        <Card
+        <BookDetailCard
           loading={loading}
-          style={{ width: 500 }}
-          actions={[
-            <ShoppingCartOutlined key="setting" />,
-            <BookOutlined key="edit" />,
-            <EllipsisOutlined key="ellipsis" />,
-          ]}
-        >
-          <div className="p-4">
-            <Meta
-              avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-              title={data?.book.title}
-              description={data?.book.description}
-            />
-          </div>
-          <div className="absolute top-2 right-0.5">
-            <Tag color="blue">
-              <span className="text-lg">Year: {data?.book.year}</span>
-            </Tag>
-          </div>
-        </Card>
+          title={data?.book.title}
+          description={data?.book.description}
+          year={data?.book.year}
+        />
       </div>
     </>
   );
