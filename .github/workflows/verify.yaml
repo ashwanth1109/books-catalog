@@ -1,7 +1,7 @@
 name: Verify
 on:
   push:
-    branches: [ "**" ]
+    branches: ["**"]
 
 jobs:
   analyze-books-msvc:
@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies
         working-directory: ${{env.directory}}
         run: npm install
-      - name: Lint Books Microservice
+      - name: Lint
         working-directory: ${{env.directory}}
         run: npm run lint
       - name: Tests
@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         working-directory: ${{env.directory}}
         run: npm install
+      - name: Lint
+        working-directory: ${{env.directory}}
+        run: npm run lint
       - name: Tests
         working-directory: ${{env.directory}}
         run: npm run test
