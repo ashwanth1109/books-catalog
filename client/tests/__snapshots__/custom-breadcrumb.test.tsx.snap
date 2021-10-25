@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`custom-breadcrumb.component.tsx should assert that breadcrumbs has two levels with title 1`] = `
+<div>
+  <div
+    class="ant-breadcrumb"
+    style="margin: 16px 0px;"
+  >
+    <span>
+      <span
+        class="ant-breadcrumb-link"
+      >
+        <span
+          class="cursor-pointer"
+        >
+          Books
+        </span>
+      </span>
+      <span
+        class="ant-breadcrumb-separator"
+      >
+        /
+      </span>
+    </span>
+    <span>
+      <span
+        class="ant-breadcrumb-link"
+      >
+        book-title
+      </span>
+      <span
+        class="ant-breadcrumb-separator"
+      >
+        /
+      </span>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`custom-breadcrumb.component.tsx should assert that no props breadcrumb shows only one level 1`] = `
+<div>
+  <div
+    class="ant-breadcrumb"
+    style="margin: 16px 0px;"
+  >
+    <span>
+      <span
+        class="ant-breadcrumb-link"
+      >
+        <span
+          class="cursor-pointer"
+        >
+          Books
+        </span>
+      </span>
+      <span
+        class="ant-breadcrumb-separator"
+      >
+        /
+      </span>
+    </span>
+  </div>
+</div>
+`;
