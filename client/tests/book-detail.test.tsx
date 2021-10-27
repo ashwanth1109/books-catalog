@@ -26,11 +26,10 @@ const gqlMocks: any[] = [
 
 describe("book-detail.component.tsx", () => {
   it("should assert that gql data is rendered correctly", async () => {
-    const navFn = jest.fn();
     await act(async () => {
       const { container } = render(
         <MockedProvider mocks={gqlMocks} addTypename={false}>
-          <BookDetailComponent bid={BOOK_ID} navigateToBooks={navFn} />
+          <BookDetailComponent bookId={BOOK_ID} />
         </MockedProvider>
       );
 

@@ -45,6 +45,9 @@ then
 elif [ "$1" == "lint" ]; then
     cd books-msvc || exit
     npm run lint
+elif [ "$1" == "client:test" ]; then
+    cd client || exit
+    npm run test
 elif [ "$1" == "k8s:db" ]
 then
   cd infra-as-code/k8s || exit
