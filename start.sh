@@ -40,4 +40,10 @@ then
   kubectl apply -f books-client.yaml
   kubectl rollout status deployment/client-depl
   kubectl port-forward service/client-svc 4000:4000
+elif [ "$1" == "clean" ]
+then
+  echo "Executing clean up steps:"
+  echo "1. Deleting db container"
+  docker stop books-db
+  docker rm books-db
 fi
