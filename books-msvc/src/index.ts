@@ -1,18 +1,33 @@
 import 'reflect-metadata';
+
 import { Logger, PORT } from '@ashwanth1109/books-catalog-common';
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+
 import type { NodeError } from '@ashwanth1109/books-catalog-common';
 
 import initializeServers from './server';
 import seedDB from './seed';
 
+dotenv.config();
+
 async function main(): Promise<void> {
   const { apolloServer, httpServer, app } = await initializeServers();
   await apolloServer.start();
-  apolloServer.applyMiddleware({ app, path: '/api/books/graphql' });
+  apolloServer.applyMiddleware({
+    app,
+    path: '/api/books/graphql',
+    cors: {
+      origin: [
+        'http://localhost:4000', // Local React App
+        'https://studio.apollographql.com', // GraphQL explorer
+      ],
+    },
+  });
 
   try {
-    await mongoose.connect('mongodb://books-db-svc:27017/books');
+    Logger.info(`Connecting to mongo db`);
+    await mongoose.connect(`mongodb://${process.env.DB_URL}`);
     await seedDB();
     Logger.info(`🚀 Connected to mongodb successfully`);
   } catch (e: NodeError) {
@@ -21,11 +36,7 @@ async function main(): Promise<void> {
 
   httpServer.listen(PORT.BOOKS, () => {
     Logger.info(
-      `🚀 Server ready within the k8s cluster at http://localhost:${PORT.BOOKS}${apolloServer.graphqlPath}`
-    );
-
-    Logger.info(
-      `🚀 Server ready via Ingress at http://localhost${apolloServer.graphqlPath}`
+      `🚀 Server ready at http://localhost:${PORT.BOOKS}${apolloServer.graphqlPath}`
     );
   });
 }

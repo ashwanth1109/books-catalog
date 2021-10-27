@@ -18,6 +18,7 @@ interface Servers {
 
 const initializeServers = async (): Promise<Servers> => {
   const app = express();
+
   const httpServer = http.createServer(app);
 
   const schema = await buildSchema({
