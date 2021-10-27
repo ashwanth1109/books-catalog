@@ -9,7 +9,7 @@ import MainLayout from "../layout/main.layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const client = new ApolloClient({
-    uri: "/api/books/graphql",
+    uri: process.env.NEXT_PUBLIC_BOOKS_API_URL,
     cache: new InMemoryCache(),
   });
 
