@@ -19,11 +19,27 @@ then
     echo "books-db container already exists, skipping creation"
     echo "Run ./start.sh clean if you want to cleanup books-db"
   fi
+
+  if [ -f ./books-msvc/.env ]; then
+    echo "books-msvc .env file already exists, skipping copy"
+  else
+    echo "books-msvc .env file does not exist, copying .env.example"
+    cp ./books-msvc/.env.example ./books-msvc/.env
+  fi
+
   echo "Starting books microservice"
   cd books-msvc || exit
   npm start
 elif [ "$1" == "client" ]
 then
+
+  if [ -f ./client/.env.local ]; then
+    echo "client .env.local file already exists, skipping copy"
+  else
+    echo "client .env.local file does not exist, copying .env.example"
+    cp ./client/.env.example ./client/.env.local
+  fi
+
   cd client || exit
   npm run dev
 elif [ "$1" == "lint" ]; then
