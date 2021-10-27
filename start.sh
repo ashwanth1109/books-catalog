@@ -12,7 +12,14 @@ then
   docker run -it -v mongodb:/data/db -p 27017:27017 --name books-db -d mongo:latest
 elif [ "$1" == "books" ]
 then
-  docker run -it -v mongodb:/data/db -p 27017:27017 --name books-db -d mongo:latest
+  if [ ! "$(docker ps -q -f name=books-db)" ]; then
+    echo "Starting books-db container"
+    docker run -it -v mongodb:/data/db -p 27017:27017 --name books-db -d mongo:latest
+  else
+    echo "books-db container already exists, skipping creation"
+    echo "Run ./start.sh clean if you want to cleanup books-db"
+  fi
+  echo "Starting books microservice"
   cd books-msvc || exit
   npm start
 elif [ "$1" == "client" ]
