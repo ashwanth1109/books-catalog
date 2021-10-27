@@ -6,6 +6,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import NextNprogress from "nextjs-progressbar";
 
 import MainLayout from "../layout/main.layout";
+import { AppContext, initialState } from "../state";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const client = new ApolloClient({
@@ -15,16 +16,18 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ApolloProvider client={client}>
-      <MainLayout>
-        <NextNprogress
-          color="#29D"
-          startPosition={0.3}
-          stopDelayMs={200}
-          height={3}
-          showOnShallow={true}
-        />
-        <Component {...pageProps} />
-      </MainLayout>
+      <AppContext.Provider value={initialState}>
+        <MainLayout>
+          <NextNprogress
+            color="#29D"
+            startPosition={0.3}
+            stopDelayMs={200}
+            height={3}
+            showOnShallow={true}
+          />
+          <Component {...pageProps} />
+        </MainLayout>
+      </AppContext.Provider>
     </ApolloProvider>
   );
 }

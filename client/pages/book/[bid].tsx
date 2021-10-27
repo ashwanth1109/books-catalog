@@ -2,7 +2,8 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 
 import BookDetailComponent from "../../components/book-detail.component";
-import { Breadcrumb } from "antd";
+import CustomBreadcrumb from "../../components/custom-breadcrumb.component";
+import Loading from "../../components/loading.component";
 
 const Bid: NextPage = () => {
   const router = useRouter();
@@ -11,24 +12,13 @@ const Bid: NextPage = () => {
   if (!bid) {
     return (
       <>
-        <Breadcrumb style={{ margin: "16px 0" }}>
-          <Breadcrumb.Item>
-            <span className="cursor-pointer">Books</span>
-          </Breadcrumb.Item>
-        </Breadcrumb>
-        <div>
-          <h1>Loading ...</h1>
-        </div>
+        <CustomBreadcrumb />
+        <Loading />
       </>
     );
   }
 
-  return (
-    <BookDetailComponent
-      bid={bid as string}
-      navigateToBooks={() => router.push("/")}
-    />
-  );
+  return <BookDetailComponent bookId={bid as string} />;
 };
 
 export default Bid;

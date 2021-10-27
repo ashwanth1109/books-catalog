@@ -10,3 +10,12 @@ export const GET_BOOK_BY_ID = gql`
     }
   }
 `;
+
+export const GET_ALL_BOOKS = gql`
+  query GetAllBooks {
+    books {
+      _id
+      title
+    }
+  }
+`;

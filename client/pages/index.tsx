@@ -1,12 +1,13 @@
-import { Breadcrumb, Card } from "antd";
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useQuery, gql } from "@apollo/client";
+import { Card } from "antd";
+import { useContext, useEffect } from "react";
 
-interface Book {
-  _id: string;
-  title: string;
-}
+import type { NextPage } from "next";
+
+import CustomBreadcrumb from "../components/custom-breadcrumb.component";
+import BookList from "../components/book-list.component";
+import useGqlQueryHook from "../hooks/use-gql-query.hook";
+import { AppContext } from "../state";
+import { GET_ALL_BOOKS } from "../gql/queries";
 
 /**
  * FIXME: Initial hydration of data should happen on server side in "getInitialProps" to take advantage of SSR
@@ -16,46 +17,22 @@ interface Book {
  */
 
 const Home: NextPage = () => {
-  const router = useRouter();
-  const { loading, error, data } = useQuery(
-    gql`
-      query GetAllBooks {
-        books {
-          _id
-          title
-        }
-      }
-    `
-  );
+  const { loading, data } = useGqlQueryHook(GET_ALL_BOOKS);
+  const { booksState } = useContext(AppContext);
 
-  if (error) return <h1>Error fetching data...</h1>;
+  useEffect(() => {
+    booksState.all.next(data?.books || []);
+  }, [booksState, data]);
 
   return (
     <>
-      <Breadcrumb style={{ margin: "16px 0" }}>
-        <Breadcrumb.Item>Books</Breadcrumb.Item>
-      </Breadcrumb>
+      <CustomBreadcrumb />
       <Card
         title="List of books in your catalog:"
         className="p-8"
         loading={loading}
       >
-        {(data?.books || [])?.map((book: Book) => (
-          <div
-            onClick={() => router.push(`/book/${encodeURIComponent(book._id)}`)}
-            key={book._id}
-          >
-            <Card.Grid
-              style={{
-                width: "25%",
-                textAlign: "center",
-                cursor: "pointer",
-              }}
-            >
-              {book?.title}
-            </Card.Grid>
-          </div>
-        ))}
+        <BookList />
       </Card>
     </>
   );

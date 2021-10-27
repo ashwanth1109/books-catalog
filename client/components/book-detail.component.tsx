@@ -1,25 +1,29 @@
-import { useQuery } from "@apollo/client";
+import { FunctionComponent } from "react";
+import { useRouter } from "next/router";
+
 import CustomBreadcrumb from "./custom-breadcrumb.component";
 import BookDetailCard from "./book-detail-card.component";
+
 import { GET_BOOK_BY_ID } from "../gql/queries";
+import useGqlQueryHook from "../hooks/use-gql-query.hook";
 
-const BookDetailComponent = ({
-  bid,
-  navigateToBooks,
-}: {
-  bid: string;
-  navigateToBooks: () => void;
-}) => {
-  const { loading, error, data } = useQuery(GET_BOOK_BY_ID, {
-    variables: { bookId: bid },
+interface BookDetailProps {
+  bookId: string;
+}
+
+const BookDetail: FunctionComponent<BookDetailProps> = ({ bookId }) => {
+  const router = useRouter();
+  const { loading, data } = useGqlQueryHook(GET_BOOK_BY_ID, {
+    variables: { bookId },
   });
-
-  if (error) return <h1>Error fetching data...</h1>;
 
   return (
     <>
       <div className="mt-4">
-        <CustomBreadcrumb title={data?.book.title} navigate={navigateToBooks} />
+        <CustomBreadcrumb
+          title={data?.book.title}
+          navigate={() => router.push("/")}
+        />
       </div>
       <div className="mt-8">
         <BookDetailCard
@@ -33,4 +37,4 @@ const BookDetailComponent = ({
   );
 };
 
-export default BookDetailComponent;
+export default BookDetail;
