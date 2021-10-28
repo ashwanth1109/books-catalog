@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`use-gql-query hook network error should assert that network errors are sent to error state 1`] = `
+"No more mocked responses for the query: query GetBookById($bookId: ObjectId!) {
+  book(bookId: $bookId) {
+    _id
+    title
+    description
+    year
+  }
+}
+
+Expected variables: {}
+
+Failed to match 1 mock for this query, which had the following variables:
+  {\\"bookId\\":\\"1234\\"}
+"
+`;

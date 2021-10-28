@@ -1,6 +1,7 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import CustomBreadcrumb from "../components/custom-breadcrumb.component";
+
+import CustomBreadcrumb from "components/custom-breadcrumb.component";
 
 const TITLE = "book-title";
 

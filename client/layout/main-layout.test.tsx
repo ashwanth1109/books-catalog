@@ -1,5 +1,5 @@
 import { act, render } from "@testing-library/react";
-import MainLayout from "../layout/main.layout";
+import MainLayout from "./main.layout";
 
 describe("main.layout.tsx", () => {
   it("should assert that main layout snapshot is correct", async () => {

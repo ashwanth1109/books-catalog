@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`loading.component.tsx should assert that dom snapshot is correct 1`] = `
+<div>
+  <div>
+    <h1>
+      Loading ...
+    </h1>
+  </div>
+</div>
+`;
