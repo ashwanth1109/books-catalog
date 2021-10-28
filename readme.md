@@ -7,6 +7,12 @@
 3. Once you see, server ready message, you can navigate to [GraphQL Explorer](http://localhost:4001/api/books/graphql) to query your server.
 4. Once your server is running, in a different terminal window, start react client: `./start.sh client` and navigate to [React Application](http://localhost:4000)
 
+## Other commands:
+
+1. Start db: `./start.sh db` (note that `./start.sh books` already handles this for you)
+2. Run lint for entire project: `./start.sh lint`
+3. Run UTs + Snapshots for client, ITs for microservice: `./start.sh test`
+
 ## Problem Statement
 
 Implement a books catalog. The website should contain two views:
