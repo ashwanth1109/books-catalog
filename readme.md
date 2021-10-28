@@ -26,7 +26,7 @@ The list of available books, on this page you should be able to view all availab
 
 ## Demo
 
-To be added
+![App Demo](./demo.gif)
 
 ## Goal
 
