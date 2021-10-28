@@ -21,7 +21,6 @@ const useGqlQueryHook = (
   if (error) {
     if (error.graphQLErrors.length > 0) {
       error.graphQLErrors.forEach((errorItem) => {
-        console.log(`errorItem.extensions::`, JSON.stringify(errorItem));
         errorsState.error.next({
           message: errorItem.message,
           type: errorType,

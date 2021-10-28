@@ -45,6 +45,13 @@ then
 elif [ "$1" == "lint" ]; then
     cd books-msvc || exit
     npm run lint
+    cd ../client || exit
+    npm run lint
+elif [ "$1" == "test" ]; then
+    cd books-msvc || exit
+    npm run test
+    cd ../client || exit
+    npm run test
 elif [ "$1" == "client:test" ]; then
     cd client || exit
     npm run test
