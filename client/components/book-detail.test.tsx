@@ -1,14 +1,15 @@
 import { render, screen, act } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
+import { MockedResponse } from "@apollo/client/utilities/testing/mocking/mockLink";
 
-import BookDetailComponent from "../components/book-detail.component";
-import { GET_BOOK_BY_ID } from "../gql/queries";
+import BookDetailComponent from "components/book-detail.component";
+import { GET_BOOK_BY_ID } from "gql/queries";
 
 const BOOK_ID = "1234";
 const BOOK_TITLE = "BOOK_TITLE";
 const BOOK_DESCRIPTION = "BOOK_DESCRIPTION";
 const BOOK_YEAR = "BOOK_YEAR";
-const gqlMocks: any[] = [
+const gqlMocks: ReadonlyArray<MockedResponse> = [
   {
     request: { query: GET_BOOK_BY_ID, variables: { bookId: BOOK_ID } },
     result: {

@@ -1,8 +1,9 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
-import { BookListItem } from "../state/books.state";
-import { AppContext } from "../state";
 import { Card } from "antd";
 import { useRouter } from "next/router";
+
+import { BookListItem } from "state/books.state";
+import { AppContext } from "state";
 
 const BookList: FunctionComponent = () => {
   const [booksList, setBooksList] = useState<BookListItem[]>([]);

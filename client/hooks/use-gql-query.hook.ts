@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { AppContext } from "../state";
 import {
   DocumentNode,
   QueryHookOptions,
@@ -7,21 +6,22 @@ import {
   useQuery,
 } from "@apollo/client";
 
-interface MapAny {
-  [key: string]: any;
-}
+import { AppContext } from "state";
+import { MapAny } from "../types/util.types";
+import { ErrorCode, ErrorType } from "../state/errors.state";
 
 const useGqlQueryHook = (
   query: DocumentNode | TypedDocumentNode,
   variables?: QueryHookOptions<MapAny, MapAny>
 ) => {
   const { errorsState } = useContext(AppContext);
-  const errorType = "GRAPHQL_CLIENT_ERROR";
+  const errorType = ErrorType.GRAPHQL_CLIENT_ERROR;
 
   const { loading, error, data } = useQuery(query, variables);
   if (error) {
     if (error.graphQLErrors.length > 0) {
       error.graphQLErrors.forEach((errorItem) => {
+        console.log(`errorItem.extensions::`, JSON.stringify(errorItem));
         errorsState.error.next({
           message: errorItem.message,
           type: errorType,
@@ -34,7 +34,7 @@ const useGqlQueryHook = (
       errorsState.error.next({
         message: error.networkError?.message,
         type: errorType,
-        code: "NETWORK_ERROR",
+        code: ErrorCode.NETWORK_ERROR,
       });
     }
 
@@ -43,7 +43,7 @@ const useGqlQueryHook = (
         errorsState.error.next({
           message: errorItem?.message,
           type: errorType,
-          code: "CLIENT_ERROR",
+          code: ErrorCode.CLIENT_ERROR,
         });
       });
     }

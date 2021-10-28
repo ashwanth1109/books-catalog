@@ -7,6 +7,15 @@ export interface ClientError {
   type?: string;
 }
 
+export enum ErrorType {
+  GRAPHQL_CLIENT_ERROR = "GRAPHQL_CLIENT_ERROR",
+}
+
+export enum ErrorCode {
+  NETWORK_ERROR = "NETWORK_ERROR",
+  CLIENT_ERROR = "CLIENT_ERROR",
+}
+
 class ErrorsState {
   // We prefer replay subject in case we need to explore history of errors
   public error: ReplaySubject<ClientError> = new ReplaySubject<ClientError>(5);
