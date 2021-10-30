@@ -6,34 +6,40 @@ import { buildSchema } from 'type-graphql';
 import path from 'path';
 
 import { BookResolver } from '../resolvers/book.resolver';
+import { GraphQLSchema } from 'graphql';
 import { ObjectIdScalar } from '../scalars/object-id.scalar';
 import { TypeGooseMiddleware } from '../middlewares/type-goose.middleware';
 import BaseServer from './base';
 
-class Server extends BaseServer {
-  public apollo?: ApolloServer;
+export const getSchema = (): Promise<GraphQLSchema> => {
+  return buildSchema({
+    resolvers: [BookResolver],
+    emitSchemaFile: path.resolve(__dirname, 'schema.gql'),
+    globalMiddlewares: [TypeGooseMiddleware],
+    scalarsMap: [{ type: ObjectId, scalar: ObjectIdScalar }],
+    validate: false,
+  });
+};
 
-  public async initializeApollo(): Promise<void> {
+class Server extends BaseServer {
+  public apollo: ApolloServer;
+  public apiPath = '/api/books/graphql';
+  public static schema: GraphQLSchema;
+
+  constructor(schema: GraphQLSchema) {
+    super();
     this.apollo = new ApolloServer({
-      schema: await buildSchema({
-        resolvers: [BookResolver],
-        emitSchemaFile: path.resolve(__dirname, 'schema.gql'),
-        globalMiddlewares: [TypeGooseMiddleware],
-        scalarsMap: [{ type: ObjectId, scalar: ObjectIdScalar }],
-        validate: false,
-      }),
+      schema,
       plugins: [ApolloServerPluginDrainHttpServer({ httpServer: this.http })],
     });
   }
 
-  public async startApollo(): Promise<void> {
-    await this.initializeApollo();
-    const apiPath = '/api/books/graphql';
-    this.serverUrl = `http://localhost:${PORT.BOOKS}${apiPath}`;
-    await this.apollo?.start();
-    this.apollo?.applyMiddleware({
+  public async start(): Promise<void> {
+    this.serverUrl = `http://localhost:${PORT.BOOKS}${this.apiPath}`;
+    await this.apollo.start();
+    this.apollo.applyMiddleware({
       app: this.express,
-      path: apiPath,
+      path: this.apiPath,
       cors: {
         origin: [
           'http://localhost:4000', // Local React App
@@ -41,6 +47,9 @@ class Server extends BaseServer {
         ],
       },
     });
+
+    await this.connectToMongo();
+    await this.startListening();
   }
 }
 
