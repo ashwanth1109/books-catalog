@@ -2,9 +2,14 @@ tasks:
   - init: |
       chmod +x start.sh
       ./start.sh install
+      gp sync-done install
       ./start.sh books
-      gp sync-done server
   - command: |
-      echo "Waiting for installations to complete and msvc's to start"
-      gp sync-await server
+      echo "Waiting for installations to complete"
+      gp sync-await install
       ./start.sh client
+
+ports:
+  - port: 4000
+  - port: 4001
+    onOpen: open-browser
