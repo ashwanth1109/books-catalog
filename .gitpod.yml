@@ -1,0 +1,15 @@
+tasks:
+  - init: |
+      chmod +x start.sh
+      ./start.sh install
+      gp sync-done install
+      ./start.sh books
+  - command: |
+      echo "Waiting for installations to complete"
+      gp sync-await install
+      ./start.sh client
+
+ports:
+  - port: 4000
+  - port: 4001
+    onOpen: open-browser
