@@ -2,7 +2,7 @@
 
 ## One-Click Getting Started with Gitpod
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ashwanth1109/books-catalog)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ashwanth1109/books-catalog/tree/add_gitpod_integration)
 
 ## Getting started
 
