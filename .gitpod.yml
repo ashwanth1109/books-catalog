@@ -3,3 +3,8 @@ tasks:
       chmod +x start.sh
       ./start.sh install
       ./start.sh books
+      gp sync-done server
+  - command: |
+      echo "Waiting for installations to complete and msvc's to start"
+      gp sync-await server
+      ./start.sh client
