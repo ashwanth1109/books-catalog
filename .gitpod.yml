@@ -1,0 +1,4 @@
+tasks:
+  - init: |
+      chmod +x start.sh
+      ./start.sh books
