@@ -1,5 +1,9 @@
 # Books Catalog
 
+## One-Click Getting Started with Gitpod
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ashwanth1109/books-catalog)
+
 ## Getting started
 
 1. Navigate to the root of the repo
@@ -18,11 +22,12 @@
 Implement a books catalog. The website should contain two views:
 
 The list of available books, on this page you should be able to view all available books, please skip pagination
+
 1. Book's page, on this page you can see extra books' fields.
 2. Book's fields:
-    1. Title
-    2. Year
-    3. Description
+   1. Title
+   2. Year
+   3. Description
 
 ## Demo
 
@@ -31,6 +36,7 @@ The list of available books, on this page you should be able to view all availab
 ## Goal
 
 Build a books catalog covering as much of the following :
+
 - [x] React
 - [x] TypeScript
 - [x] NodeJS
@@ -52,7 +58,9 @@ Build a books catalog covering as much of the following :
 ## Important Notes
 
 ### Kubernetes and Skaffold for Orchestration
+
 Since this was also built with a microservices (msvcs) first approach - some orchestration mechanism was required. Given that the project needed to be portable (i.e. self-contained and no provisioning of AWS resources or other such costs):
+
 - I've gone with local k8s (docker desktop with k8s enabled)
 - Skaffold for management of resources and hot reloading of containers
 
@@ -64,6 +72,7 @@ After some experimentation, I finally set up an alternative, much easier setup w
 ### State Management Layer
 
 Options for state management:
+
 1. Redux (Redux Toolkit) + Saga - Redux DevTools is a big plus here
 2. RxJS Subjects - personal preference for mid-sized project, esp. because cleaner paradigm
 
@@ -74,6 +83,7 @@ Having worked with React and Angular in the past, the state management solution 
 As we start adding more msvcs, we need to integrate some eventing mechanism for cross msvc communication.
 
 Options:
+
 1. AWS SQS - past experience + comfort pick
 2. NATS Streaming Server - Easy to integrate as a self-contained k8s resource
 3. RabbitMQ - need to try
