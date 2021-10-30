@@ -4,30 +4,30 @@ import { GraphQLResponse } from 'apollo-server-types';
 import { ADD_BOOK } from './gql/books.mutations';
 import { BookInput } from '../types/book.input';
 import { GET_BOOK, GET_BOOKS } from './gql/books.queries';
-import initializeServers from '../server';
+import Server, { getSchema } from '../server';
 
 describe('Books microservices test', () => {
-  let apolloServer: ApolloServer;
+  let server: Server;
 
   beforeAll(async () => {
-    ({ apolloServer } = await initializeServers());
+    server = new Server(await getSchema());
   });
 
   const fetchAllBooks = (): Promise<GraphQLResponse> => {
-    return apolloServer.executeOperation({
+    return server.apollo.executeOperation({
       query: GET_BOOKS,
     });
   };
 
   const addBook = (book: BookInput): Promise<GraphQLResponse> => {
-    return apolloServer.executeOperation({
+    return server.apollo.executeOperation({
       query: ADD_BOOK,
       variables: { book },
     });
   };
 
   const getBookById = (bookId: string): Promise<GraphQLResponse> => {
-    return apolloServer.executeOperation({
+    return server.apollo.executeOperation({
       query: GET_BOOK,
       variables: { bookId },
     });
