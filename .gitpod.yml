@@ -1,4 +1,5 @@
 tasks:
   - init: |
       chmod +x start.sh
+      ./start.sh install
       ./start.sh books

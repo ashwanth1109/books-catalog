@@ -7,6 +7,10 @@ then
   # Too heavy, and some setup required before getting this to work
   # You should probably prefer the local setup below - faster to iterate, easy to start
   skaffold dev
+elif [ "$1" == "install" ]
+then
+  cd books-msvc && npm install && cd ..
+  cd client && npm install && cd ..
 elif [ "$1" == "db" ]
 then
   docker run -it -v mongodb:/data/db -p 27017:27017 --name books-db -d mongo:latest
